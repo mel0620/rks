@@ -6,21 +6,27 @@
         <div class="container q-my-sm">
           <div class="row items-center justify-between">
             <div class="col-xl-2">
-              <div class="brand">
-                <a href="javascript:" class="row items-center" @click="$router.push('/')">
-                  <img src="../assets/logo.svg" width="80" alt="">
-                </a>
+              <div class="row items-center q-gutter-sm">
+                <div v-if="$q.platform.is.mobile">
+                  <q-btn flat round dense icon="menu" @click="leftDrawer = !leftDrawer" />
+                </div>
+                <div class="brand">
+                  <a href="javascript:" class="row items-center" @click="$router.push('/')">
+                    <img src="../assets/logo.svg" v-if="$q.platform.is.desktop" width="80" alt="">
+                    <img src="../assets/logo.svg" v-if="$q.platform.is.mobile" width="60" alt="">
+                  </a>
+                </div>
               </div>
             </div>
-            <div class="col-xl-5">
+            <div class="col-xl-5" v-if="$q.platform.is.desktop">
               <div class="search">
                 <q-input value="" dark filled dense placeholder="Search for products..."></q-input>
               </div>
             </div>
             <div class="action">
               <div class="action__buttons">
+                <q-btn round class="q-mr-sm" icon="mdi-magnify" v-if="$q.platform.is.mobile"></q-btn>
                 <q-btn round class="q-mr-sm" icon="mdi-heart-outline"></q-btn>
-                <!-- <q-btn round class="q-mx-sm" icon="mdi-cart-outline"></q-btn> -->
                 <q-btn-dropdown v-model="menu" rounded icon="mdi-account-circle-outline">
                   <q-list>
                     <q-item clickable v-close-popup @click="$router.push('/login')">
@@ -40,15 +46,6 @@
                         <q-item-label>Register</q-item-label>
                       </q-item-section>
                     </q-item>
-
-                    <q-item clickable v-close-popup @click="onItemClick">
-                      <q-item-section avatar>
-                        <q-avatar size="28px" icon="mdi-format-list-bulleted" color="accent" text-color="white" />
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>My Orders</q-item-label>
-                      </q-item-section>
-                    </q-item>
                   </q-list>
                 </q-btn-dropdown>
               </div>
@@ -57,7 +54,7 @@
         </div>
       </q-toolbar>
 
-      <div class="container">
+      <div class="container" v-if="$q.platform.is.desktop">
         <q-tabs align="justify" indicator-color="secondary">
           <q-route-tab to = "/" class="text-capitalize" label = "Computer Repair" />
           <q-route-tab to = "/" class="text-capitalize" label = "Networking" />
@@ -68,6 +65,19 @@
         </q-tabs>
       </div>
     </q-header>
+
+    <!-- (Optional) A Drawer; you can add one more with side="right" or change this one's side -->
+    <q-drawer
+      v-model="leftDrawer"
+      side="left"
+      bordered
+      content-class="bg-grey-2"
+    >
+      <!-- QScrollArea is optional -->
+      <q-scroll-area class="fit q-pa-sm">
+        <!-- Content here -->
+      </q-scroll-area>
+    </q-drawer>
 
     <q-page-container>
       <router-view />
@@ -85,7 +95,8 @@ export default {
   data () {
     return {
       // leftDrawerOpen: this.$q.platform.is.desktop
-      menu: false
+      menu: false,
+      leftDrawer: false
     }
   },
 

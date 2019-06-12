@@ -5,7 +5,7 @@
         <div class="container">
           <h4 class="text-center">Register</h4>
           <div class="row justify-center">
-            <div class="col-xl-5">
+            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12">
               <div class="form-container">
                 <q-input dense outlined label="First Name"></q-input>
                 <q-input dense class="q-mt-md" outlined label="Last Name"></q-input>
